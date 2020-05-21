@@ -2,30 +2,26 @@ package blackjack;
 
 import java.util.ArrayList;
 
-import card.Deck;
+import card.*;
 import utils.Utils;
 
 public class House {
 
-	private ArrayList<BlackjackCard> houseHand;
+	private ArrayList<Card> houseHand;
 
 	public House(Deck deck) {
-		houseHand = new ArrayList<BlackjackCard>();
+		houseHand = new ArrayList<Card>();
 
 		Utils.printwln("The House's Hand:");
 		houseHand.add(deck.deal());
 		System.out.println(houseHand.get(0).toString() + "\nHidden Card");
 
-		BlackjackCard temp = deck.deal();
-
-		if (houseHand.get(0).getPlayNumber() == 11 && temp.getPlayNumber() == 11) {
-			temp.setPlayNumber(1);
-		}
+		Card temp = deck.deal();
 
 		houseHand.add(temp);
 	}
 
-	public ArrayList<BlackjackCard> getHand() {
+	public ArrayList<Card> getHand() {
 		return houseHand;
 	}
 }

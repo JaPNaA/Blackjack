@@ -3,10 +3,14 @@ package blackjack;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import card.Deck;
+import card.*;
 import utils.Utils;
 
 public class Blackjack {
+
+	private final static int TARGET_NUMBER = 21;
+	private final static int ACE_HIGH_VALUE = 11;
+	private final static int ACE_LOW_VALUE = 1;
 
 	static Scanner sc = new Scanner(System.in);
 	private boolean playerBust, dealerBust, playerJack, dealerJack;
@@ -23,7 +27,7 @@ public class Blackjack {
 			if (checkBust(user.getHand())) {
 				playerBust = true;
 				break;
-			} else if (sum(user.getHand()) == 21) {
+			} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
 				playerJack = true;
 				break;
 			}
@@ -32,7 +36,7 @@ public class Blackjack {
 			if (checkBust(dealer.getHand())) {
 				dealerBust = true;
 				break;
-			} else if (sum(user.getHand()) == 21) {
+			} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
 				dealerJack = true;
 				break;
 			}
@@ -42,19 +46,19 @@ public class Blackjack {
 		return winScreen(user.getHand(), dealer.getHand());
 	}
 
-	public void userTurn(ArrayList<BlackjackCard> hand) {
+	public void userTurn(ArrayList<Card> hand) {
 		Utils.printwln("Enter 'H' to hit. Any other input will be interpreted as stand.");
 		choice = sc.nextLine();
 		choice = choice.toUpperCase();
 
 		if (choice.equals("H")) {
 			hit(hand);
-			Utils.printwln("The sum of your hand is " + sum(hand) + ".");
+			Utils.printwln("The sum of your hand is " + smartSum(hand) + ".");
 		}
 	}
 
-	public void dealerTurn(ArrayList<BlackjackCard> hand) {
-		if (sum(hand) <= 16) {
+	public void dealerTurn(ArrayList<Card> hand) {
+		if (smartSum(hand) <= 16) {
 			Utils.printwln("The house draws a ");
 			hit(hand);
 		} else {
@@ -62,12 +66,8 @@ public class Blackjack {
 		}
 	}
 
-	public void hit(ArrayList<BlackjackCard> hand) {
-		BlackjackCard temp = set.deal();
-
-		if (sum(hand) + temp.getPlayNumber() > 21 && temp.getPlayNumber() == 11) {
-			temp.setPlayNumber(1);
-		}
+	public void hit(ArrayList<Card> hand) {
+		Card temp = set.deal();
 
 		hand.add(temp);
 		System.out.println(temp.toString());
@@ -78,22 +78,29 @@ public class Blackjack {
 
 		for (BlackjackCard c : hand) {
 			sum += c.getPlayNumber();
-		}
+			}
 
 		return sum;
 	}
 
-	public void printHand(ArrayList<BlackjackCard> hand) {
-		for (BlackjackCard c : hand) {
+	private int getCardValue(Card card) {
+		if (card.getNumber() == Card.ACE) {
+			return 11;
+		}
+		return Math.min(card.getNumber(), 10);
+	}
+
+	public void printHand(ArrayList<Card> hand) {
+		for (Card c : hand) {
 			System.out.println(c.toString());
 		}
 	}
 
-	public boolean checkBust(ArrayList<BlackjackCard> hand) {
-		return sum(hand) > 21;
+	public boolean checkBust(ArrayList<Card> hand) {
+		return smartSum(hand) > TARGET_NUMBER;
 	}
 
-	public boolean winScreen(ArrayList<BlackjackCard> playerHand, ArrayList<BlackjackCard> houseHand) {
+	public boolean winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
 		boolean playerWin;
 
 		if (playerBust) {
@@ -109,11 +116,11 @@ public class Blackjack {
 			Utils.printwln("The house got a Blackjack.");
 			playerWin = false;
 		} else {
-			if (21 - sum(playerHand) < 21 - sum(houseHand)) {
-				Utils.printwln("You won by getting closer to 21 than the house.");
+			if (TARGET_NUMBER - smartSum(playerHand) < TARGET_NUMBER - smartSum(houseHand)) {
+				Utils.printwln("You won by getting closer to BUST_NUMBER than the house.");
 				playerWin = true;
 			} else {
-				Utils.printwln("The house won by getting closer to 21 than you.");
+				Utils.printwln("The house won by getting closer to BUST_NUMBER than you.");
 				playerWin = false;
 
 			}
@@ -126,7 +133,5 @@ public class Blackjack {
 
 		return playerWin;
 	}
-
-	
 
 }

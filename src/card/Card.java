@@ -2,6 +2,11 @@ package card;
 
 public class Card {
 
+	public static final int ACE = 1;
+	public static final int JACK = 11;
+	public static final int QUEEN = 12;
+	public static final int KING = 13;
+
 	protected int number;
 	protected String suit;
 
@@ -58,13 +63,13 @@ public class Card {
 
 	public String toStringFace() {
 		switch (number) {
-		case 1:
+		case ACE:
 			return "Ace";
-		case 11:
+		case JACK:
 			return "Jack";
-		case 12:
+		case QUEEN:
 			return "Queen";
-		case 13:
+		case KING:
 			return "King";
 		default:
 			return "Error!";

@@ -2,19 +2,17 @@ package card;
 
 import java.util.ArrayList;
 
-import blackjack.BlackjackCard;
-
 public class Deck {
 
-	private ArrayList<BlackjackCard> deck;
+	private ArrayList<Card> deck;
 	private String[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
 
 	public Deck() {
-		deck = new ArrayList<BlackjackCard>();
+		deck = new ArrayList<Card>();
 
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 13; j++) {
-				deck.add(new BlackjackCard(j + 1, suits[i]));
+				deck.add(new Card(j + 1, suits[i]));
 			}
 		}
 	}
@@ -31,7 +29,7 @@ public class Deck {
 		}
 	}
 
-	public BlackjackCard deal() {
+	public Card deal() {
 		return deck.remove((int) (Math.random() * deck.size()));
 	}
 }
