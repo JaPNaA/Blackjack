@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import blackjack.Blackjack;
+import utils.Utils;
 
 public class PlayBlackjack {
 
@@ -17,7 +18,7 @@ public class PlayBlackjack {
 		double money = 100;
 
 		do {
-			System.out.println("\nPlease enter the amount of money you would like to wager in Game " + numGames + ".");
+			Utils.printwln("Please enter the amount of money you would like to wager in Game " + numGames + ".");
 
 			double wager = sc.nextDouble();
 			Blackjack gameZone = new Blackjack();
@@ -30,13 +31,13 @@ public class PlayBlackjack {
 				money -= wager;
 			}
 
-			gameZone.delay(250);
+			Utils.delay(250);
 
 			if (money <= 0) {
 				break;
 			}
 
-			System.out.println("\nYou have won " + playerWins + " times, while the house was won " + houseWins
+			Utils.printwln("You have won " + playerWins + " times, while the house was won " + houseWins
 					+ " times. You have $" + money + ".");
 			System.out.println(
 					"\nIf you would like to play another game, enter 'Y'. Any other input will exit the session.");
@@ -48,7 +49,7 @@ public class PlayBlackjack {
 		} while (askPlayAgain());
 
 		if (money <= 0) {
-			System.out.println("\nYou have lost all of your money. You must leave this instant.");
+			Utils.printwln("You have lost all of your money. You must leave this instant.");
 		} else {
 			System.out.println(
 					"\nThank you so much for playing tonight. We hope you enjoyed your time and expect to see you back soon. "

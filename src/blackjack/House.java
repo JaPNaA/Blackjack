@@ -3,6 +3,7 @@ package blackjack;
 import java.util.ArrayList;
 
 import card.Deck;
+import utils.Utils;
 
 public class House {
 
@@ -11,7 +12,7 @@ public class House {
 	public House(Deck deck) {
 		houseHand = new ArrayList<BlackjackCard>();
 
-		System.out.println("\nThe House's Hand:");
+		Utils.printwln("The House's Hand:");
 		houseHand.add(deck.deal());
 		System.out.println(houseHand.get(0).toString() + "\nHidden Card");
 

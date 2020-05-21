@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import card.Deck;
+import utils.Utils;
 
 public class Blackjack {
 
@@ -37,27 +38,27 @@ public class Blackjack {
 			}
 		} while (choice.equals("H"));
 
-		delay(750);
+		Utils.delay(750);
 		return winScreen(user.getHand(), dealer.getHand());
 	}
 
 	public void userTurn(ArrayList<BlackjackCard> hand) {
-		System.out.println("\nEnter 'H' to hit. Any other input will be interpreted as stand.");
+		Utils.printwln("Enter 'H' to hit. Any other input will be interpreted as stand.");
 		choice = sc.nextLine();
 		choice = choice.toUpperCase();
 
 		if (choice.equals("H")) {
 			hit(hand);
-			System.out.println("\nThe sum of your hand is " + sum(hand) + ".");
+			Utils.printwln("The sum of your hand is " + sum(hand) + ".");
 		}
 	}
 
 	public void dealerTurn(ArrayList<BlackjackCard> hand) {
 		if (sum(hand) <= 16) {
-			System.out.println("\nThe house draws a ");
+			Utils.printwln("The house draws a ");
 			hit(hand);
 		} else {
-			System.out.println("\nThe house doesn't do anything.");
+			Utils.printwln("The house doesn't do anything.");
 		}
 	}
 
@@ -96,41 +97,36 @@ public class Blackjack {
 		boolean playerWin;
 
 		if (playerBust) {
-			System.out.println("\nYou busted and the house won.");
+			Utils.printwln("You busted and the house won.");
 			playerWin = false;
 		} else if (dealerBust) {
-			System.out.println("\nThe house busted and you won.");
+			Utils.printwln("The house busted and you won.");
 			playerWin = true;
 		} else if (playerJack) {
-			System.out.println("\nYou got a Blackjack! Congratulations.");
+			Utils.printwln("You got a Blackjack! Congratulations.");
 			playerWin = true;
 		} else if (dealerJack) {
-			System.out.println("\nThe house got a Blackjack.");
+			Utils.printwln("The house got a Blackjack.");
 			playerWin = false;
 		} else {
 			if (21 - sum(playerHand) < 21 - sum(houseHand)) {
-				System.out.println("\nYou won by getting closer to 21 than the house.");
+				Utils.printwln("You won by getting closer to 21 than the house.");
 				playerWin = true;
 			} else {
-				System.out.println("\nThe house won by getting closer to 21 than you.");
+				Utils.printwln("The house won by getting closer to 21 than you.");
 				playerWin = false;
 
 			}
 		}
 
-		System.out.println("\nYour hand:");
+		Utils.printwln("Your hand:");
 		printHand(playerHand);
-		System.out.println("\nThe house's hand:");
+		Utils.printwln("The house's hand:");
 		printHand(houseHand);
 
 		return playerWin;
 	}
 
-	public void delay(int ms) {
-		try {
-			Thread.sleep(ms);
-		} catch (InterruptedException e) {
-		}
-	}
+	
 
 }
