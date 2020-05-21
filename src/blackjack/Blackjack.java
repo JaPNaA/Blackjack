@@ -73,12 +73,26 @@ public class Blackjack {
 		System.out.println(temp.toString());
 	}
 
-	public int sum(ArrayList<BlackjackCard> hand) {
+	/**
+	 * Automatically sums a hand, reducing values of Aces if the sum is greater than
+	 * the target value
+	 */
+	public int smartSum(ArrayList<Card> hand) {
 		int sum = 0;
+		int acesCount = 0;
 
-		for (BlackjackCard c : hand) {
-			sum += c.getPlayNumber();
+		for (Card card : hand) {
+			if (card.getNumber() == Card.ACE) {
+				acesCount++;
 			}
+
+			sum += getCardValue(card);
+		}
+
+		while (sum > TARGET_NUMBER && acesCount > 0) {
+			sum -= ACE_HIGH_VALUE;
+			sum += ACE_LOW_VALUE;
+		}
 
 		return sum;
 	}
