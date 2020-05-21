@@ -8,6 +8,7 @@ public class BlackjackCard extends Card {
 
 	public BlackjackCard(int x, String s) {
 		super(x, s);
+
 		if (x > 10) {
 			playNum = 10;
 		} else if (x == 1) {

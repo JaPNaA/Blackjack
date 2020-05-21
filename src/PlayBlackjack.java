@@ -10,15 +10,19 @@ public class PlayBlackjack {
 		System.out.println(
 				"Welcome to the game of Blackjack, simplified so my head doesn't explode. Numerical cards have their stated value. Face cards have a value of 10. "
 						+ "\nAce has a value of 11, unless that would cause a bust, in which case it is 1. That decision is made automatically and not retroactively."
-						+ "\nAll other rules are typical. \nYou will be playing against the computer. You start with $100.");
+						+ "\nAll other rules are typical."
+						+ "\nYou will be playing against the computer. You start with $100.");
+
 		String nextGame = "Y";
 		int numGames = 1, playerWins = 0, houseWins = 0;
 		double money = 100;
 
 		while (nextGame.equals("Y")) {
 			System.out.println("\nPlease enter the amount of money you would like to wager in Game " + numGames + ".");
+
 			double wager = sc.nextDouble();
 			Blackjack gameZone = new Blackjack();
+
 			if (gameZone.playGame()) {
 				playerWins++;
 				money += wager;
@@ -28,14 +32,19 @@ public class PlayBlackjack {
 			}
 
 			gameZone.delay(250);
+
 			if (money <= 0) {
 				break;
 			}
+
 			System.out.println("\nYou have won " + playerWins + " times, while the house was won " + houseWins
-					+ " times." + " You have $" + money + ".");
+					+ " times. You have $" + money + ".");
 			System.out.println(
 					"\nIf you would like to play another game, enter 'Y'. Any other input will exit the session.");
-			sc.nextLine(); // this one
+
+			if (sc.hasNextLine())
+				sc.nextLine();
+
 			nextGame = sc.nextLine();
 			nextGame = nextGame.toUpperCase();
 

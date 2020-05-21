@@ -45,6 +45,7 @@ public class Blackjack {
 		System.out.println("\nEnter 'H' to hit. Any other input will be interpreted as stand.");
 		choice = sc.nextLine();
 		choice = choice.toUpperCase();
+
 		if (choice.equals("H")) {
 			hit(hand);
 			System.out.println("\nThe sum of your hand is " + sum(hand) + ".");
@@ -62,18 +63,22 @@ public class Blackjack {
 
 	public void hit(ArrayList<BlackjackCard> hand) {
 		BlackjackCard temp = set.deal();
+
 		if (sum(hand) + temp.getPlayNumber() > 21 && temp.getPlayNumber() == 11) {
 			temp.setPlayNumber(1);
 		}
+
 		hand.add(temp);
 		System.out.println(temp.toString());
 	}
 
 	public int sum(ArrayList<BlackjackCard> hand) {
 		int sum = 0;
+
 		for (BlackjackCard c : hand) {
 			sum += c.getPlayNumber();
 		}
+
 		return sum;
 	}
 
@@ -92,6 +97,7 @@ public class Blackjack {
 
 	public boolean winScreen(ArrayList<BlackjackCard> playerHand, ArrayList<BlackjackCard> houseHand) {
 		boolean playerWin;
+
 		if (playerBust) {
 			System.out.println("\nYou busted and the house won.");
 			playerWin = false;
@@ -119,15 +125,14 @@ public class Blackjack {
 		printHand(playerHand);
 		System.out.println("\nThe house's hand:");
 		printHand(houseHand);
-		return playerWin;
 
+		return playerWin;
 	}
 
 	public void delay(int ms) {
 		try {
 			Thread.sleep(ms);
 		} catch (InterruptedException e) {
-
 		}
 	}
 

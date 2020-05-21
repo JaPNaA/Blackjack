@@ -47,13 +47,13 @@ public class Card {
 		}
 
 		if (suit.equals("Clubs")) {
-			return rank + " of " + "\u2663";
+			return rank + " of \u2663";
 		} else if (suit.equals("Diamonds")) {
-			return rank + " of " + "\u2666";
+			return rank + " of \u2666";
 		} else if (suit.equals("Hearts")) {
-			return rank + " of " + "\u2665";
+			return rank + " of \u2665";
 		}
-		return rank + " of " + "\u2660";
+		return rank + " of \u2660";
 	}
 
 	public String toStringFace() {

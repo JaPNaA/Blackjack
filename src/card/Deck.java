@@ -11,6 +11,7 @@ public class Deck {
 
 	public Deck() {
 		deck = new ArrayList<BlackjackCard>();
+
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 13; j++) {
 				deck.add(new BlackjackCard(j + 1, suits[i]));
@@ -20,6 +21,7 @@ public class Deck {
 
 	public void printDeck() {
 		String lastSuit = null;
+
 		for (Card c : deck) {
 			if (!c.getSuit().equals(lastSuit)) {
 				lastSuit = c.getSuit();
