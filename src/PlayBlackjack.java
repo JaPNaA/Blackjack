@@ -13,11 +13,10 @@ public class PlayBlackjack {
 						+ "\nAll other rules are typical."
 						+ "\nYou will be playing against the computer. You start with $100.");
 
-		String nextGame = "Y";
 		int numGames = 1, playerWins = 0, houseWins = 0;
 		double money = 100;
 
-		while (nextGame.equals("Y")) {
+		do {
 			System.out.println("\nPlease enter the amount of money you would like to wager in Game " + numGames + ".");
 
 			double wager = sc.nextDouble();
@@ -45,11 +44,8 @@ public class PlayBlackjack {
 			if (sc.hasNextLine())
 				sc.nextLine();
 
-			nextGame = sc.nextLine();
-			nextGame = nextGame.toUpperCase();
-
 			numGames++;
-		}
+		} while (askPlayAgain());
 
 		if (money <= 0) {
 			System.out.println("\nYou have lost all of your money. You must leave this instant.");
@@ -59,6 +55,11 @@ public class PlayBlackjack {
 							+ "\nDon't forget to fill out the customer experience survey on your way out!");
 		}
 
+	}
+
+	private static boolean askPlayAgain() {
+		String reply = sc.nextLine();
+		return reply.toUpperCase().charAt(0) == 'Y';
 	}
 }
 
