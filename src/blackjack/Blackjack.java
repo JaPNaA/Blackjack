@@ -89,10 +89,7 @@ public class Blackjack {
 	}
 
 	public boolean checkBust(ArrayList<BlackjackCard> hand) {
-		if (sum(hand) > 21) {
-			return true;
-		}
-		return false;
+		return sum(hand) > 21;
 	}
 
 	public boolean winScreen(ArrayList<BlackjackCard> playerHand, ArrayList<BlackjackCard> houseHand) {
