@@ -77,10 +77,6 @@ public class Blackjack {
 		}
 	}
 
-	private void endGame() {
-		throw new GameEndException();
-	}
-
 	private void dealerTurn() {
 		if (smartSum(dealer.getHand()) <= 16) {
 			Utils.printwln("The house draws a ");
@@ -90,11 +86,38 @@ public class Blackjack {
 		}
 	}
 
+	private void winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
+		// if player could have continued;
+		// that means the game was broken at some point
+		if (!playerCanContinue) {
+			closestToTargetCheck();
+		}
+
+		Utils.printwln("Your hand:");
+		printHand(playerHand);
+		Utils.printwln("The house's hand:");
+		printHand(houseHand);
+	}
+
+	private void closestToTargetCheck() {
+		if (TARGET_NUMBER - smartSum(user.getHand()) < TARGET_NUMBER - smartSum(dealer.getHand())) {
+			Utils.printwln("You won by getting closer to " + TARGET_NUMBER + " than the house.");
+			didPlayerWin = true;
+		} else {
+			Utils.printwln("The house won by getting closer to " + TARGET_NUMBER + " than you.");
+			didPlayerWin = false;
+		}
+	}
+
 	private void hit(ArrayList<Card> hand) {
 		Card temp = set.deal();
 
 		hand.add(temp);
 		System.out.println(temp.toString());
+	}
+
+	private boolean checkBust(ArrayList<Card> hand) {
+		return smartSum(hand) > TARGET_NUMBER;
 	}
 
 	/**
@@ -134,31 +157,8 @@ public class Blackjack {
 		}
 	}
 
-	private boolean checkBust(ArrayList<Card> hand) {
-		return smartSum(hand) > TARGET_NUMBER;
-	}
-
-	private void winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
-		// if player could have continued;
-		// that means the game was broken at some point
-		if (!playerCanContinue) {
-			closestToTargetCheck();
-		}
-
-		Utils.printwln("Your hand:");
-		printHand(playerHand);
-		Utils.printwln("The house's hand:");
-		printHand(houseHand);
-	}
-
-	private void closestToTargetCheck() {
-		if (TARGET_NUMBER - smartSum(user.getHand()) < TARGET_NUMBER - smartSum(dealer.getHand())) {
-			Utils.printwln("You won by getting closer to " + TARGET_NUMBER + " than the house.");
-			didPlayerWin = true;
-		} else {
-			Utils.printwln("The house won by getting closer to " + TARGET_NUMBER + " than you.");
-			didPlayerWin = false;
-		}
+	private void endGame() {
+		throw new GameEndException();
 	}
 
 }
