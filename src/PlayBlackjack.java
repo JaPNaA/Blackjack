@@ -20,7 +20,7 @@ public class PlayBlackjack {
 		do {
 			Utils.printwln("Please enter the amount of money you would like to wager in Game " + numGames + ".");
 
-			double wager = sc.nextDouble();
+			double wager = Utils.askDouble();
 			Blackjack gameZone = new Blackjack();
 			gameZone.play();
 
@@ -42,8 +42,6 @@ public class PlayBlackjack {
 					+ " times. You have $" + money + ".");
 			System.out.println(
 					"\nIf you would like to play another game, enter 'Y'. Any other input will exit the session.");
-
-			sc.nextLine();
 
 			numGames++;
 		} while (Utils.askConfirmByCopyChar('Y'));

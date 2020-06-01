@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Utils {
@@ -37,6 +38,21 @@ public class Utils {
         String scannerLine = scanner.nextLine();
         return scannerLine.length() > 0
                 && Character.toUpperCase(scannerLine.charAt(0)) == Character.toUpperCase(copyChar);
+    }
+
+    /**
+     * Asks user for double, with error handling
+     */
+    public static double askDouble() {
+        while (true) {
+            try {
+                return scanner.nextDouble();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid!");
+            } finally {
+                scanner.nextLine(); // fixes java (quirk)
+            }
+        }
     }
 
 }
