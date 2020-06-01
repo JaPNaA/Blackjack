@@ -145,6 +145,7 @@ public class Blackjack {
 		while (sum > TARGET_NUMBER && acesCount > 0) {
 			sum -= ACE_HIGH_VALUE;
 			sum += ACE_LOW_VALUE;
+			acesCount--;
 		}
 
 		return sum;
