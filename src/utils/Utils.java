@@ -3,6 +3,7 @@ package utils;
 import java.util.Scanner;
 
 public class Utils {
+
     final static Scanner scanner = new Scanner(System.in);
 
     public static void delay(int ms) {

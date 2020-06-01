@@ -55,4 +55,5 @@ public class Card {
 			throw new Error("Suit is not a suit?");
 		}
 	}
+
 }
