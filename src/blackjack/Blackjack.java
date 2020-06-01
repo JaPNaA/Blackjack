@@ -51,41 +51,41 @@ public class Blackjack {
 		playerCanContinue = Utils.askConfirmByCopyChar('H');
 
 		if (playerCanContinue) {
-			hit(user.getHand());
-			Utils.printwln("The sum of your hand is " + smartSum(user.getHand()) + ".");
+			hit(user.hand);
+			Utils.printwln("The sum of your hand is " + smartSum(user.hand) + ".");
 		}
 	}
 
 	private void checkUserHand() {
-		if (checkBust(user.getHand())) {
+		if (checkBust(user.hand)) {
 			Utils.printwln("You busted and the house won.");
 			didPlayerWin = false;
 			endGame();
-		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
+		} else if (smartSum(user.hand) == TARGET_NUMBER) {
 			Utils.printwln("You got a Blackjack! Congratulations.");
 			didPlayerWin = true;
 			endGame();
 		}
 	}
 
-	private void checkDealerHand() {
-		if (checkBust(dealer.getHand())) {
-			Utils.printwln("The house busted and you won.");
-			didPlayerWin = true;
-			endGame();
-		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
-			Utils.printwln("The house got a Blackjack.");
-			didPlayerWin = false;
-			endGame();
+	private void dealerTurn() {
+		if (smartSum(dealer.hand) <= 16) {
+			Utils.printwln("The house draws a ");
+			hit(dealer.hand);
+		} else {
+			Utils.printwln("The house doesn't do anything.");
 		}
 	}
 
-	private void dealerTurn() {
-		if (smartSum(dealer.getHand()) <= 16) {
-			Utils.printwln("The house draws a ");
-			hit(dealer.getHand());
-		} else {
-			Utils.printwln("The house doesn't do anything.");
+	private void checkDealerHand() {
+		if (checkBust(dealer.hand)) {
+			Utils.printwln("The house busted and you won.");
+			didPlayerWin = true;
+			endGame();
+		} else if (smartSum(dealer.hand) == TARGET_NUMBER) {
+			Utils.printwln("The house got a Blackjack.");
+			didPlayerWin = false;
+			endGame();
 		}
 	}
 
@@ -103,7 +103,10 @@ public class Blackjack {
 	}
 
 	private void closestToTargetCheck() {
-		if (TARGET_NUMBER - smartSum(user.getHand()) < TARGET_NUMBER - smartSum(dealer.getHand())) {
+		int userTotal = smartSum(user.hand);
+		int dealerTotal = smartSum(dealer.hand);
+
+		if (TARGET_NUMBER - userTotal < TARGET_NUMBER - dealerTotal) {
 			Utils.printwln("You won by getting closer to " + TARGET_NUMBER + " than the house.");
 			didPlayerWin = true;
 		} else {
