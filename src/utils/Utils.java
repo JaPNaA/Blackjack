@@ -21,19 +21,21 @@ public class Utils {
 
     /**
      * Asks for confirmation by making the user copy a character.
-     * <br><br>
+     * <br>
+     * <br>
      * Example: <br>
      * Type 'q' to quit <br>
-     * > Quit  // will return true <br>
-     * > anything not starting with 'q'  // will return false <br>
+     * > Quit // will return true <br>
+     * > anything not starting with 'q' // will return false <br>
      * 
-     * @param copyChar the character the user has to type to return true
+     * @param copyChar
+     *                     the character the user has to type to return true
      * @return if the user had typed the character
      */
     public static boolean askConfirmByCopyChar(char copyChar) {
-        return Character.toUpperCase(
-            scanner.nextLine().charAt(0)
-        ) == Character.toUpperCase(copyChar);
+        String scannerLine = scanner.nextLine();
+        return scannerLine.length() > 0
+                && Character.toUpperCase(scannerLine.charAt(0)) == Character.toUpperCase(copyChar);
     }
 
 }
