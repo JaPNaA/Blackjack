@@ -43,8 +43,7 @@ public class PlayBlackjack {
 			System.out.println(
 					"\nIf you would like to play another game, enter 'Y'. Any other input will exit the session.");
 
-			if (sc.hasNextLine())
-				sc.nextLine();
+			sc.nextLine();
 
 			numGames++;
 		} while (askPlayAgain());
