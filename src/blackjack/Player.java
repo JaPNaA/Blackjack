@@ -16,9 +16,9 @@ public class Player {
 		playerHand.add(deck.deal());
 		System.out.println(playerHand.get(0).toString());
 
-		Card temp = deck.deal();
+		Card newCard = deck.deal();
 
-		playerHand.add(temp);
+		playerHand.add(newCard);
 		System.out.println(playerHand.get(1).toString());
 	}
 

@@ -16,9 +16,9 @@ public class House {
 		houseHand.add(deck.deal());
 		System.out.println(houseHand.get(0).toString() + "\nHidden Card");
 
-		Card temp = deck.deal();
+		Card newCard = deck.deal();
 
-		houseHand.add(temp);
+		houseHand.add(newCard);
 	}
 
 	public ArrayList<Card> getHand() {

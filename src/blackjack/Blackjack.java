@@ -110,10 +110,10 @@ public class Blackjack {
 	}
 
 	private void hit(ArrayList<Card> hand) {
-		Card temp = set.deal();
+		Card newCard = set.deal();
 
-		hand.add(temp);
-		System.out.println(temp.toString());
+		hand.add(newCard);
+		System.out.println(newCard.toString());
 	}
 
 	private boolean checkBust(ArrayList<Card> hand) {
