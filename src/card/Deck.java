@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Deck {
 
 	private ArrayList<Card> deck;
-	private String[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
+	private CardSuit[] suits = { CardSuit.Clubs, CardSuit.Diamonds, CardSuit.Hearts, CardSuit.Spades, };
 
 	public Deck() {
 		deck = new ArrayList<Card>();
@@ -18,14 +18,14 @@ public class Deck {
 	}
 
 	public void printDeck() {
-		String lastSuit = null;
+		CardSuit lastSuit = null;
 
 		for (Card c : deck) {
-			if (!c.getSuit().equals(lastSuit)) {
-				lastSuit = c.getSuit();
+			if (c.suit != lastSuit) {
+				lastSuit = c.suit;
 				System.out.println(lastSuit);
 			}
-			System.out.println(c.getNumber());
+			System.out.println(c.number);
 		}
 	}
 

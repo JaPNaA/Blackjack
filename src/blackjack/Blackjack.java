@@ -135,7 +135,7 @@ public class Blackjack {
 		int acesCount = 0;
 
 		for (Card card : hand) {
-			if (card.getNumber() == Card.ACE) {
+			if (card.number == Card.ACE) {
 				acesCount++;
 			}
 
@@ -151,10 +151,10 @@ public class Blackjack {
 	}
 
 	private int getCardValue(Card card) {
-		if (card.getNumber() == Card.ACE) {
+		if (card.number == Card.ACE) {
 			return 11;
 		}
-		return Math.min(card.getNumber(), 10);
+		return Math.min(card.number, 10);
 	}
 
 	private void endGame() {
