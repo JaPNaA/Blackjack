@@ -11,9 +11,9 @@ public class Blackjack {
 	private final static int ACE_HIGH_VALUE = 11;
 	private final static int ACE_LOW_VALUE = 1;
 
-	private Deck set = new Deck();
-	private Player user = new Player(set);
-	private House dealer = new House(set);
+	private Deck deck = new Deck();
+	private Player player = new Player(deck);
+	private House house = new House(deck);
 
 	private boolean playerCanContinue = true;
 	private boolean didPlayerWin = false;
@@ -23,8 +23,8 @@ public class Blackjack {
 	}
 
 	public void play() {
-		user.printHand();
-		dealer.printHand();
+		player.printHand();
+		house.printHand();
 
 		do {
 			try {
@@ -35,7 +35,7 @@ public class Blackjack {
 		} while (playerCanContinue);
 
 		Utils.delay(750);
-		winScreen(user.hand, dealer.hand);
+		winScreen(player.hand, house.hand);
 	}
 
 	private void doTurnCycle() {
@@ -51,17 +51,17 @@ public class Blackjack {
 		playerCanContinue = Utils.askConfirmByCopyChar('H');
 
 		if (playerCanContinue) {
-			hit(user.hand);
-			Utils.printwln("The sum of your hand is " + smartSum(user.hand) + ".");
+			hit(player.hand);
+			Utils.printwln("The sum of your hand is " + smartSum(player.hand) + ".");
 		}
 	}
 
 	private void checkUserHand() {
-		if (checkBust(user.hand)) {
+		if (checkBust(player.hand)) {
 			Utils.printwln("You busted and the house won.");
 			didPlayerWin = false;
 			endGame();
-		} else if (smartSum(user.hand) == TARGET_NUMBER) {
+		} else if (smartSum(player.hand) == TARGET_NUMBER) {
 			Utils.printwln("You got a Blackjack! Congratulations.");
 			didPlayerWin = true;
 			endGame();
@@ -69,20 +69,20 @@ public class Blackjack {
 	}
 
 	private void dealerTurn() {
-		if (smartSum(dealer.hand) <= 16) {
+		if (smartSum(house.hand) <= 16) {
 			Utils.printwln("The house draws a ");
-			hit(dealer.hand);
+			hit(house.hand);
 		} else {
 			Utils.printwln("The house doesn't do anything.");
 		}
 	}
 
 	private void checkDealerHand() {
-		if (checkBust(dealer.hand)) {
+		if (checkBust(house.hand)) {
 			Utils.printwln("The house busted and you won.");
 			didPlayerWin = true;
 			endGame();
-		} else if (smartSum(dealer.hand) == TARGET_NUMBER) {
+		} else if (smartSum(house.hand) == TARGET_NUMBER) {
 			Utils.printwln("The house got a Blackjack.");
 			didPlayerWin = false;
 			endGame();
@@ -97,14 +97,14 @@ public class Blackjack {
 		}
 
 		Utils.printwln("Your hand:");
-		user.printEntireHand();
+		player.printEntireHand();
 		Utils.printwln("The house's hand:");
-		dealer.printEntireHand();
+		house.printEntireHand();
 	}
 
 	private void closestToTargetCheck() {
-		int userTotal = smartSum(user.hand);
-		int dealerTotal = smartSum(dealer.hand);
+		int userTotal = smartSum(player.hand);
+		int dealerTotal = smartSum(house.hand);
 
 		if (TARGET_NUMBER - userTotal < TARGET_NUMBER - dealerTotal) {
 			Utils.printwln("You won by getting closer to " + TARGET_NUMBER + " than the house.");
@@ -116,7 +116,7 @@ public class Blackjack {
 	}
 
 	private void hit(ArrayList<Card> hand) {
-		Card newCard = set.deal();
+		Card newCard = deck.deal();
 
 		hand.add(newCard);
 		System.out.println(newCard.toString());
