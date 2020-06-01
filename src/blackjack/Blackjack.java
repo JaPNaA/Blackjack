@@ -97,9 +97,9 @@ public class Blackjack {
 		}
 
 		Utils.printwln("Your hand:");
-		printHand(playerHand);
+		user.printEntireHand();
 		Utils.printwln("The house's hand:");
-		printHand(houseHand);
+		dealer.printEntireHand();
 	}
 
 	private void closestToTargetCheck() {
@@ -155,12 +155,6 @@ public class Blackjack {
 			return 11;
 		}
 		return Math.min(card.getNumber(), 10);
-	}
-
-	private void printHand(ArrayList<Card> hand) {
-		for (Card c : hand) {
-			System.out.println(c.toString());
-		}
 	}
 
 	private void endGame() {
