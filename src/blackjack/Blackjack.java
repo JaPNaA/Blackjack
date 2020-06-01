@@ -23,6 +23,9 @@ public class Blackjack {
 	}
 
 	public void play() {
+		user.printHand();
+		dealer.printHand();
+
 		do {
 			try {
 				doTurnCycle();
@@ -32,7 +35,7 @@ public class Blackjack {
 		} while (playerCanContinue);
 
 		Utils.delay(750);
-		winScreen(user.getHand(), dealer.getHand());
+		winScreen(user.hand, dealer.hand);
 	}
 
 	private void doTurnCycle() {

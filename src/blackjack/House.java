@@ -1,27 +1,18 @@
 package blackjack;
 
-import java.util.ArrayList;
-
 import card.*;
 import utils.Utils;
 
-public class House {
-
-	private ArrayList<Card> houseHand;
+public class House extends AbstractPlayer {
 
 	public House(Deck deck) {
-		houseHand = new ArrayList<Card>();
+		super(deck);
+	}
 
+	@Override
+	public void printHand() {
 		Utils.printwln("The House's Hand:");
-		houseHand.add(deck.deal());
-		System.out.println(houseHand.get(0).toString() + "\nHidden Card");
-
-		Card newCard = deck.deal();
-
-		houseHand.add(newCard);
+		System.out.println(hand.get(0).toString() + "\nHidden Card");
 	}
 
-	public ArrayList<Card> getHand() {
-		return houseHand;
-	}
 }
