@@ -12,7 +12,6 @@ public class Blackjack {
 	private final static int ACE_HIGH_VALUE = 11;
 	private final static int ACE_LOW_VALUE = 1;
 
-	static Scanner sc = new Scanner(System.in);
 	private boolean playerBust, dealerBust, playerJack, dealerJack;
 
 	private Deck set = new Deck();
@@ -59,13 +58,11 @@ public class Blackjack {
 
 	private void userTurn(ArrayList<Card> hand) {
 		Utils.printwln("Enter 'H' to hit. Any other input will be interpreted as stand.");
-		String choice = sc.nextLine().toUpperCase();
-		playerCanContinue = choice.equals("H");
+		playerCanContinue = Utils.askConfirmByCopyChar('H');
 
 		if (playerCanContinue) {
 			hit(hand);
 			Utils.printwln("The sum of your hand is " + smartSum(hand) + ".");
-			
 		}
 	}
 

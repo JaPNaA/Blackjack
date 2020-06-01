@@ -46,7 +46,7 @@ public class PlayBlackjack {
 			sc.nextLine();
 
 			numGames++;
-		} while (askPlayAgain());
+		} while (Utils.askConfirmByCopyChar('Y'));
 
 		if (money <= 0) {
 			Utils.printwln("You have lost all of your money. You must leave this instant.");
@@ -56,11 +56,6 @@ public class PlayBlackjack {
 							+ "\nDon't forget to fill out the customer experience survey on your way out!");
 		}
 
-	}
-
-	private static boolean askPlayAgain() {
-		String reply = sc.nextLine();
-		return reply.toUpperCase().charAt(0) == 'Y';
 	}
 }
 
