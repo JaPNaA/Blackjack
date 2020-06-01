@@ -17,7 +17,7 @@ With
 return someStatement;
 ```
 
-(This was replacement was done again in [Card.java](../../commit/dcc76d5772ee30da2756109982e1150408874a09)) <!-- TODO: get line number -->
+(This was replacement was done again in [Card.java](../../commit/dcc76d5772ee30da2756109982e1150408874a09#diff-baed53f82ede74117b26c104f95a0c19R19))
 
 [Used a function to ask to play again](../../commit/d10939c336a63275ffc3f39543022d628a865e55)
 
