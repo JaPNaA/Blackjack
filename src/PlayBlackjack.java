@@ -18,32 +18,17 @@ public class PlayBlackjack {
 						+ "\nYou will be playing against the computer. You start with $100.");
 
 		do {
-			Utils.printwln("Please enter the amount of money you would like to wager in Game " + numGames + ".");
-
-			double wager = Utils.askDouble();
-			Blackjack game = new Blackjack();
-			game.play();
-
-			if (game.didPlayerWin()) {
-				playerWins++;
-				money += wager;
-			} else {
-				houseWins++;
-				money -= wager;
-			}
+			playARound();
 
 			Utils.delay(250);
 
 			if (money <= 0) {
 				break;
 			}
-
 			numGames++;
 
-			Utils.printwln("You have won " + playerWins + " times, while the house was won " + houseWins
-					+ " times. You have $" + money + ".");
-			System.out.println(
-					"\nIf you would like to play another game, enter 'Y'. Any other input will exit the session.");
+			printStats();
+
 		} while (Utils.askConfirmByCopyChar('Y'));
 
 		if (money <= 0) {
@@ -54,6 +39,29 @@ public class PlayBlackjack {
 							+ "\nDon't forget to fill out the customer experience survey on your way out!");
 		}
 
+	}
+
+	private static void playARound() {
+		Utils.printwln("Please enter the amount of money you would like to wager in Game " + numGames + ".");
+
+		double wager = Utils.askDouble();
+		Blackjack game = new Blackjack();
+		game.play();
+
+		if (game.didPlayerWin()) {
+			playerWins++;
+			money += wager;
+		} else {
+			houseWins++;
+			money -= wager;
+		}
+	}
+
+	private static void printStats() {
+		Utils.printwln("You have won " + playerWins + " times, while the house was won " + houseWins
+				+ " times. You have $" + money + ".");
+		System.out
+				.println("\nIf you would like to play another game, enter 'Y'. Any other input will exit the session.");
 	}
 }
 
