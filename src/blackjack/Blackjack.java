@@ -1,7 +1,6 @@
 package blackjack;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import card.*;
 import utils.Utils;
@@ -11,8 +10,6 @@ public class Blackjack {
 	private final static int TARGET_NUMBER = 21;
 	private final static int ACE_HIGH_VALUE = 11;
 	private final static int ACE_LOW_VALUE = 1;
-
-	private boolean playerBust, dealerBust, playerJack, dealerJack;
 
 	private Deck set = new Deck();
 	private Player user = new Player(set);
@@ -35,7 +32,7 @@ public class Blackjack {
 		} while (playerCanContinue);
 
 		Utils.delay(750);
-		didPlayerWin = winScreen(user.getHand(), dealer.getHand());
+		winScreen(user.getHand(), dealer.getHand());
 	}
 
 	private void doTurnCycle() {
@@ -58,20 +55,24 @@ public class Blackjack {
 
 	private void checkUserHand() {
 		if (checkBust(user.getHand())) {
-			playerBust = true;
+			Utils.printwln("You busted and the house won.");
+			didPlayerWin = false;
 			endGame();
 		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
-			playerJack = true;
+			Utils.printwln("You got a Blackjack! Congratulations.");
+			didPlayerWin = true;
 			endGame();
 		}
 	}
 
 	private void checkDealerHand() {
 		if (checkBust(dealer.getHand())) {
-			dealerBust = true;
+			Utils.printwln("The house busted and you won.");
+			didPlayerWin = true;
 			endGame();
 		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
-			dealerJack = true;
+			Utils.printwln("The house got a Blackjack.");
+			didPlayerWin = false;
 			endGame();
 		}
 	}
@@ -137,29 +138,16 @@ public class Blackjack {
 		return smartSum(hand) > TARGET_NUMBER;
 	}
 
-	private boolean winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
-		boolean playerWin;
-
-		if (playerBust) {
-			Utils.printwln("You busted and the house won.");
-			playerWin = false;
-		} else if (dealerBust) {
-			Utils.printwln("The house busted and you won.");
-			playerWin = true;
-		} else if (playerJack) {
-			Utils.printwln("You got a Blackjack! Congratulations.");
-			playerWin = true;
-		} else if (dealerJack) {
-			Utils.printwln("The house got a Blackjack.");
-			playerWin = false;
-		} else {
+	private void winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
+		// if player could have continued;
+		// that means the game was broken at some point
+		if (!playerCanContinue) {
 			if (TARGET_NUMBER - smartSum(playerHand) < TARGET_NUMBER - smartSum(houseHand)) {
-				Utils.printwln("You won by getting closer to BUST_NUMBER than the house.");
-				playerWin = true;
+				Utils.printwln("You won by getting closer to " + TARGET_NUMBER + " than the house.");
+				didPlayerWin = true;
 			} else {
-				Utils.printwln("The house won by getting closer to BUST_NUMBER than you.");
-				playerWin = false;
-
+				Utils.printwln("The house won by getting closer to " + TARGET_NUMBER + " than you.");
+				didPlayerWin = false;
 			}
 		}
 
@@ -167,8 +155,6 @@ public class Blackjack {
 		printHand(playerHand);
 		Utils.printwln("The house's hand:");
 		printHand(houseHand);
-
-		return playerWin;
 	}
 
 }
