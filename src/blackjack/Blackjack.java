@@ -142,19 +142,23 @@ public class Blackjack {
 		// if player could have continued;
 		// that means the game was broken at some point
 		if (!playerCanContinue) {
-			if (TARGET_NUMBER - smartSum(playerHand) < TARGET_NUMBER - smartSum(houseHand)) {
-				Utils.printwln("You won by getting closer to " + TARGET_NUMBER + " than the house.");
-				didPlayerWin = true;
-			} else {
-				Utils.printwln("The house won by getting closer to " + TARGET_NUMBER + " than you.");
-				didPlayerWin = false;
-			}
+			closestToTargetCheck();
 		}
 
 		Utils.printwln("Your hand:");
 		printHand(playerHand);
 		Utils.printwln("The house's hand:");
 		printHand(houseHand);
+	}
+
+	private void closestToTargetCheck() {
+		if (TARGET_NUMBER - smartSum(user.getHand()) < TARGET_NUMBER - smartSum(dealer.getHand())) {
+			Utils.printwln("You won by getting closer to " + TARGET_NUMBER + " than the house.");
+			didPlayerWin = true;
+		} else {
+			Utils.printwln("The house won by getting closer to " + TARGET_NUMBER + " than you.");
+			didPlayerWin = false;
+		}
 	}
 
 }
