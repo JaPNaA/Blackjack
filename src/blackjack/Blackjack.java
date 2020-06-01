@@ -35,7 +35,7 @@ public class Blackjack {
 		} while (playerCanContinue);
 
 		Utils.delay(750);
-		winScreen(player.hand, house.hand);
+		endOfGame(player.hand, house.hand);
 	}
 
 	private void doTurnCycle() {
@@ -89,7 +89,7 @@ public class Blackjack {
 		}
 	}
 
-	private void winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
+	private void endOfGame(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
 		// if player could have continued;
 		// that means the game was broken at some point
 		if (!playerCanContinue) {
