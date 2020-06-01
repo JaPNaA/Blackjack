@@ -7,6 +7,9 @@ public class PlayBlackjack {
 
 	static Scanner sc = new Scanner(System.in);
 
+	static int numGames = 0, playerWins = 0, houseWins = 0;
+	static double money = 100;
+
 	public static void main(String[] args) {
 		System.out.println(
 				"Welcome to the game of Blackjack, simplified so my head doesn't explode. Numerical cards have their stated value. Face cards have a value of 10. "
@@ -14,17 +17,14 @@ public class PlayBlackjack {
 						+ "\nAll other rules are typical."
 						+ "\nYou will be playing against the computer. You start with $100.");
 
-		int numGames = 1, playerWins = 0, houseWins = 0;
-		double money = 100;
-
 		do {
 			Utils.printwln("Please enter the amount of money you would like to wager in Game " + numGames + ".");
 
 			double wager = Utils.askDouble();
-			Blackjack gameZone = new Blackjack();
-			gameZone.play();
+			Blackjack game = new Blackjack();
+			game.play();
 
-			if (gameZone.didPlayerWin()) {
+			if (game.didPlayerWin()) {
 				playerWins++;
 				money += wager;
 			} else {
@@ -38,12 +38,12 @@ public class PlayBlackjack {
 				break;
 			}
 
+			numGames++;
+
 			Utils.printwln("You have won " + playerWins + " times, while the house was won " + houseWins
 					+ " times. You have $" + money + ".");
 			System.out.println(
 					"\nIf you would like to play another game, enter 'Y'. Any other input will exit the session.");
-
-			numGames++;
 		} while (Utils.askConfirmByCopyChar('Y'));
 
 		if (money <= 0) {
