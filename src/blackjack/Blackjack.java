@@ -14,14 +14,18 @@ public class Blackjack {
 
 	static Scanner sc = new Scanner(System.in);
 	private boolean playerBust, dealerBust, playerJack, dealerJack;
+
 	private String choice;
-	private Deck set;
+	private Deck set = new Deck();
+	private Player user = new Player(set);
+	private House dealer = new House(set);
+	private boolean didPlayerWin = false;
 
-	public boolean playGame() {
-		set = new Deck();
-		Player user = new Player(set);
-		House dealer = new House(set);
+	public boolean didPlayerWin() {
+		return didPlayerWin;
+	}
 
+	public void play() {
 		do {
 			userTurn(user.getHand());
 			if (checkBust(user.getHand())) {
@@ -43,10 +47,10 @@ public class Blackjack {
 		} while (choice.equals("H"));
 
 		Utils.delay(750);
-		return winScreen(user.getHand(), dealer.getHand());
+		didPlayerWin = winScreen(user.getHand(), dealer.getHand());
 	}
 
-	public void userTurn(ArrayList<Card> hand) {
+	private void userTurn(ArrayList<Card> hand) {
 		Utils.printwln("Enter 'H' to hit. Any other input will be interpreted as stand.");
 		choice = sc.nextLine();
 		choice = choice.toUpperCase();
@@ -57,7 +61,7 @@ public class Blackjack {
 		}
 	}
 
-	public void dealerTurn(ArrayList<Card> hand) {
+	private void dealerTurn(ArrayList<Card> hand) {
 		if (smartSum(hand) <= 16) {
 			Utils.printwln("The house draws a ");
 			hit(hand);
@@ -66,7 +70,7 @@ public class Blackjack {
 		}
 	}
 
-	public void hit(ArrayList<Card> hand) {
+	private void hit(ArrayList<Card> hand) {
 		Card temp = set.deal();
 
 		hand.add(temp);
@@ -77,7 +81,7 @@ public class Blackjack {
 	 * Automatically sums a hand, reducing values of Aces if the sum is greater than
 	 * the target value
 	 */
-	public int smartSum(ArrayList<Card> hand) {
+	private int smartSum(ArrayList<Card> hand) {
 		int sum = 0;
 		int acesCount = 0;
 
@@ -104,17 +108,17 @@ public class Blackjack {
 		return Math.min(card.getNumber(), 10);
 	}
 
-	public void printHand(ArrayList<Card> hand) {
+	private void printHand(ArrayList<Card> hand) {
 		for (Card c : hand) {
 			System.out.println(c.toString());
 		}
 	}
 
-	public boolean checkBust(ArrayList<Card> hand) {
+	private boolean checkBust(ArrayList<Card> hand) {
 		return smartSum(hand) > TARGET_NUMBER;
 	}
 
-	public boolean winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
+	private boolean winScreen(ArrayList<Card> playerHand, ArrayList<Card> houseHand) {
 		boolean playerWin;
 
 		if (playerBust) {

@@ -22,8 +22,9 @@ public class PlayBlackjack {
 
 			double wager = sc.nextDouble();
 			Blackjack gameZone = new Blackjack();
+			gameZone.play();
 
-			if (gameZone.playGame()) {
+			if (gameZone.didPlayerWin()) {
 				playerWins++;
 				money += wager;
 			} else {
