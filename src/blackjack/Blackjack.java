@@ -35,7 +35,7 @@ public class Blackjack {
 	}
 
 	private void doTurnCycle() {
-		userTurn(user.getHand());
+		userTurn();
 		
 		if (checkBust(user.getHand())) {
 			playerBust = true;
@@ -45,7 +45,7 @@ public class Blackjack {
 			return;
 		}
 
-		dealerTurn(dealer.getHand());
+		dealerTurn();
 
 		if (checkBust(dealer.getHand())) {
 			dealerBust = true;
@@ -56,20 +56,20 @@ public class Blackjack {
 		}
 	}
 
-	private void userTurn(ArrayList<Card> hand) {
+	private void userTurn() {
 		Utils.printwln("Enter 'H' to hit. Any other input will be interpreted as stand.");
 		playerCanContinue = Utils.askConfirmByCopyChar('H');
 
 		if (playerCanContinue) {
-			hit(hand);
-			Utils.printwln("The sum of your hand is " + smartSum(hand) + ".");
+			hit(user.getHand());
+			Utils.printwln("The sum of your hand is " + smartSum(user.getHand()) + ".");
 		}
 	}
 
-	private void dealerTurn(ArrayList<Card> hand) {
-		if (smartSum(hand) <= 16) {
+	private void dealerTurn() {
+		if (smartSum(dealer.getHand()) <= 16) {
 			Utils.printwln("The house draws a ");
-			hit(hand);
+			hit(dealer.getHand());
 		} else {
 			Utils.printwln("The house doesn't do anything.");
 		}
