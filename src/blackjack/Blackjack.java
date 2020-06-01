@@ -27,7 +27,11 @@ public class Blackjack {
 
 	public void play() {
 		do {
-			doTurnCycle();
+			try {
+				doTurnCycle();
+			} catch (GameEndException exception) {
+				break;
+			}
 		} while (playerCanContinue);
 
 		Utils.delay(750);
@@ -55,21 +59,25 @@ public class Blackjack {
 	private void checkUserHand() {
 		if (checkBust(user.getHand())) {
 			playerBust = true;
-			return;
+			endGame();
 		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
 			playerJack = true;
-			return;
+			endGame();
 		}
 	}
 
 	private void checkDealerHand() {
 		if (checkBust(dealer.getHand())) {
 			dealerBust = true;
-			return;
+			endGame();
 		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
 			dealerJack = true;
-			return;
+			endGame();
 		}
+	}
+
+	private void endGame() {
+		throw new GameEndException();
 	}
 
 	private void dealerTurn() {
@@ -163,4 +171,16 @@ public class Blackjack {
 		return playerWin;
 	}
 
+}
+
+/**
+ * Thrown when the game ends
+ * 
+ * Note: the class actually extends and Error, although it's more fitting to
+ * call it an exeption.
+ * 
+ * The reason is simply because I don't like how Java handles Exceptions.
+ */
+class GameEndException extends Error {
+	private static final long serialVersionUID = 1L;
 }
