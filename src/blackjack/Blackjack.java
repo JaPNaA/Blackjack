@@ -36,24 +36,10 @@ public class Blackjack {
 
 	private void doTurnCycle() {
 		userTurn();
-		
-		if (checkBust(user.getHand())) {
-			playerBust = true;
-			return;
-		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
-			playerJack = true;
-			return;
-		}
+		checkUserHand();
 
 		dealerTurn();
-
-		if (checkBust(dealer.getHand())) {
-			dealerBust = true;
-			return;
-		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
-			dealerJack = true;
-			return;
-		}
+		checkDealerHand();
 	}
 
 	private void userTurn() {
@@ -63,6 +49,26 @@ public class Blackjack {
 		if (playerCanContinue) {
 			hit(user.getHand());
 			Utils.printwln("The sum of your hand is " + smartSum(user.getHand()) + ".");
+		}
+	}
+
+	private void checkUserHand() {
+		if (checkBust(user.getHand())) {
+			playerBust = true;
+			return;
+		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
+			playerJack = true;
+			return;
+		}
+	}
+
+	private void checkDealerHand() {
+		if (checkBust(dealer.getHand())) {
+			dealerBust = true;
+			return;
+		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
+			dealerJack = true;
+			return;
 		}
 	}
 
