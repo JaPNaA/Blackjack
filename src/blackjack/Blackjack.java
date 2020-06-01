@@ -15,10 +15,11 @@ public class Blackjack {
 	static Scanner sc = new Scanner(System.in);
 	private boolean playerBust, dealerBust, playerJack, dealerJack;
 
-	private String choice;
 	private Deck set = new Deck();
 	private Player user = new Player(set);
 	private House dealer = new House(set);
+
+	private boolean playerCanContinue = true;
 	private boolean didPlayerWin = false;
 
 	public boolean didPlayerWin() {
@@ -27,37 +28,44 @@ public class Blackjack {
 
 	public void play() {
 		do {
-			userTurn(user.getHand());
-			if (checkBust(user.getHand())) {
-				playerBust = true;
-				break;
-			} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
-				playerJack = true;
-				break;
-			}
-
-			dealerTurn(dealer.getHand());
-			if (checkBust(dealer.getHand())) {
-				dealerBust = true;
-				break;
-			} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
-				dealerJack = true;
-				break;
-			}
-		} while (choice.equals("H"));
+			doTurnCycle();
+		} while (playerCanContinue);
 
 		Utils.delay(750);
 		didPlayerWin = winScreen(user.getHand(), dealer.getHand());
 	}
 
+	private void doTurnCycle() {
+		userTurn(user.getHand());
+		
+		if (checkBust(user.getHand())) {
+			playerBust = true;
+			return;
+		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
+			playerJack = true;
+			return;
+		}
+
+		dealerTurn(dealer.getHand());
+
+		if (checkBust(dealer.getHand())) {
+			dealerBust = true;
+			return;
+		} else if (smartSum(user.getHand()) == TARGET_NUMBER) {
+			dealerJack = true;
+			return;
+		}
+	}
+
 	private void userTurn(ArrayList<Card> hand) {
 		Utils.printwln("Enter 'H' to hit. Any other input will be interpreted as stand.");
-		choice = sc.nextLine();
-		choice = choice.toUpperCase();
+		String choice = sc.nextLine().toUpperCase();
+		playerCanContinue = choice.equals("H");
 
-		if (choice.equals("H")) {
+		if (playerCanContinue) {
 			hit(hand);
 			Utils.printwln("The sum of your hand is " + smartSum(hand) + ".");
+			
 		}
 	}
 
