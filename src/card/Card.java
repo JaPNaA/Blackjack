@@ -19,30 +19,14 @@ public class Card {
 		return this.number == b.number && this.suit == b.suit;
 	}
 
+	@Override
 	public String toString() {
-		String rank;
-
-		if (number == 1 || number > 10) {
-			rank = toStringFace();
-		} else {
-			rank = Integer.toString(number);
-		}
-
-		switch (suit) {
-			case Clubs:
-				return rank + " of \u2663";
-			case Diamonds:
-				return rank + " of \u2666";
-			case Hearts:
-				return rank + " of \u2665";
-			case Spades:
-				return rank + " of \u2660";
-			default:
-				throw new Error("Suit is not a suit?");
-		}
+		String rank = getFaceString();
+		String suit = getSuitString();
+		return suit + " " + rank;
 	}
 
-	public String toStringFace() {
+	private String getFaceString() {
 		switch (number) {
 		case ACE:
 			return "Ace";
@@ -53,7 +37,22 @@ public class Card {
 		case KING:
 			return "King";
 		default:
-			return "Error!";
+			return Integer.toString(number);
+		}
+	}
+
+	private String getSuitString() {
+		switch (suit) {
+		case Clubs:
+			return "\u2663";
+		case Diamonds:
+			return "\u2666";
+		case Hearts:
+			return "\u2665";
+		case Spades:
+			return "\u2660";
+		default:
+			throw new Error("Suit is not a suit?");
 		}
 	}
 }
